@@ -7,7 +7,7 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import {getServerSession} from "next-auth";
 import {authOptions} from "@/utils/authOptions";
-import {redirect, useRouter} from "next/navigation";
+import {redirect} from "next/navigation";
 import {headers} from "next/headers";
 import React from "react";
 // import GoogleAnalytics from "@/app/GoogleAnalytics";
@@ -27,7 +27,11 @@ export const metadata: Metadata = {
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
     const headersList = headers();
     const pathname = headersList.get('x-pathname') || "";
-    const data = await getServerSession(authOptions);
+    let data = null
+    try {
+        data = await getServerSession(authOptions);
+    } catch (e) {
+    }
 
     if (pathname.startsWith("/auth/admin") && (data == null || data.user.role !== "ADMIN")) {
         redirect("/home")
