@@ -10,7 +10,7 @@ import {authOptions} from "@/utils/authOptions";
 import {redirect, useRouter} from "next/navigation";
 import {headers} from "next/headers";
 import React from "react";
-import GoogleAnalytics from "@/app/GoogleAnalytics";
+// import GoogleAnalytics from "@/app/GoogleAnalytics";
 config.autoAddCss = false;
 
 export const metadata: Metadata = {
@@ -39,7 +39,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
     return (
         <html lang="en">
-            <GoogleAnalytics />
+            {/*<GoogleAnalytics />*/}
             <body>
                 <AuthProvider>
                     <Header/>
