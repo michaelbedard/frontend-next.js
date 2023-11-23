@@ -1,0 +1,203 @@
+.background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80vh;
+    z-index: -1;
+    background-color: var(--blue-200);
+}
+
+.container {
+    height: 16vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.logo {
+    height: 16vh;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.logo:hover {
+    opacity: 0.7;
+}
+
+.container ul {
+    list-style-type: none;
+    margin-left: 20px;
+}
+
+.container a {
+    margin: 10px;
+    font-size: 25px;
+    color: var(--blue-800);
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+
+    transition: all .2s;
+}
+
+.container a:hover {
+    color: var(--blue-300);
+}
+
+.loginButton {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    margin-right: 20px;
+}
+
+.loginButton__sideBar {
+    display: none;
+}
+
+.hamburgerMenu {
+    display: none;
+}
+
+/*BELOW IS NOT USEFULL FOR HEAER< USE IT IN TITLE AND OTHER*/
+
+/*.header__container .imageContainer {*/
+/*    position: absolute;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*    width: 100%;*/
+/*    height: 80vh;*/
+/*    overflow: hidden;*/
+/*}*/
+
+/*.header__container .image {*/
+/*    position: absolute;*/
+/*    top: 50%;*/
+/*    transform: translate(-50%, -50%);*/
+/*    left: 80%;*/
+/*    height: 55vh;*/
+/*    object-fit: cover;*/
+/*}*/
+
+/*.header__section--second {*/
+/*    height: 48vh;*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    justify-content: center;*/
+/*    align-items: start;*/
+/*    line-height: 1;*/
+/*    z-index: 1;*/
+
+/*    !*secondary*!*/
+/*    max-width: 950px;*/
+/*    width: calc(100% - 30px);*/
+/*    margin: 0 15px;*/
+/*}*/
+
+/*.header__section--second h1 span {*/
+/*    background-color: white;*/
+/*    line-height: 1.20;*/
+
+/*}*/
+
+/*.header__section--second h2 span{*/
+/*    font-size: 22px;*/
+/*    padding: 2px 2px 2px 0;*/
+/*    margin-top: 2px;*/
+/*    background-color: white;*/
+
+/*    !*overflow: hidden;*!*/
+/*    !*text-overflow: ellipsis;*!*/
+/*    !*white-space: nowrap;*!*/
+/*    !*display: flex;*!*/
+/*}*/
+
+/*.header__hidden-title {*/
+/*    width: 100%;*/
+/*    overflow: hidden;*/
+/*    text-overflow: ellipsis;*/
+/*    white-space: nowrap;*/
+/*    display: flex;*/
+/*}*/
+
+/*.header__section--third {*/
+/*    z-index: 1;*/
+/*    min-height: 16vh;*/
+/*}*/
+
+/*.header__section--second span {*/
+/*    background-color: white;*/
+/*    line-height: 1;*/
+/*    margin: 0;*/
+/*    padding: 0px;*/
+/*}*/
+
+/*.header__progress-bar--wrapper {*/
+/*    background-color: black;*/
+/*    height: 15px;*/
+/*    position: sticky;*/
+/*    top:0;*/
+/*    left:0;*/
+/*    z-index: 1;*/
+/*    width: 100%;*/
+/*}*/
+
+/*.header__progress-bar--style {*/
+/*    height: 15px;*/
+/*    background-color: green;*/
+/*}*/
+
+@media screen and (max-width: 800px) {
+    .loginButton {
+        display: none;
+    }
+
+    .container {
+        justify-content: space-between;
+    }
+
+    .container ul {
+        position: fixed;
+        top: 0;
+        z-index: 100;
+        display: flex;
+        flex-direction: column;
+        right: -270px;
+        width: 250px;
+        height: 100vh;
+        background: var(--blue-200) ;
+        box-shadow: 0 40px 60px rgba(0, 0, 0, 0.4);
+        transition: 0.3s ease-in-out;
+        padding-top:100px;
+    }
+
+    .container ul.active {
+        right: 0;
+    }
+
+    .container a {
+        width: 100%;
+        /*border-bottom: solid 2px black;*/
+        text-align: center;
+        justify-content: center;
+        margin: 20px 0;
+        font-size: 30px;
+    }
+
+    .loginButton__sideBar {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: var(--blue-200) ;
+    }
+
+    .hamburgerMenu {
+        display: block;
+        margin-right: 30px;
+        cursor: pointer;
+        z-index: 101; /* on top of ul, which is at 100 */
+    }
+}

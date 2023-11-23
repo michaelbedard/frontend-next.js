@@ -1,0 +1,62 @@
+
+.container {
+    position: relative;
+}
+
+.button {
+    position: relative;
+
+    background-color: var(--white);
+    border-radius: 8px;
+    padding: 5px 20px 5px 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border: solid 2px black;
+    transition: all .2s;
+    z-index: 2;
+}
+
+.shadow {
+    position: absolute;
+
+    background-color: #333333;
+    top: 6px; /* Adjusted top position */
+    left: 2px; /* Adjusted left position */
+    width: calc(100% - 4px); /* Adjusted width */
+    height: calc(100% - 8px); /* Adjusted height */
+    border: solid 2px black;
+    border-radius: 8px;
+    z-index: 1;
+}
+
+.button.active{
+    background-color: var(--gray);
+}
+
+
+.button:active {
+    transform: translateY(2px);
+    background-color: var(--gray);
+}
+
+.label {
+}
+
+.image {
+    margin-left: 20px;
+}
+
+.image img {
+    max-height: 40px;
+    margin-top: 4px;
+}
+
+@media (min-width: 768px) {
+    .button:hover {
+        background-color: darkgrey;
+        /*//prevents always hover on mobile*/
+    }
+}
