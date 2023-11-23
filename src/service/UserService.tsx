@@ -1,5 +1,5 @@
 import {User} from "next-auth";
-import axiosInterceptor from "../../axiosInterceptor";
+import axiosInterceptor from "../app/axiosInterceptor";
 
 
 export async function login(email:string, password: string): Promise<userType> {

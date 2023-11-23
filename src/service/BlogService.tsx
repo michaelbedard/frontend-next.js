@@ -1,4 +1,4 @@
-import axiosInterceptor from "../../axiosInterceptor";
+import axiosInterceptor from "../app/axiosInterceptor";
 
 // PUBLIC
 export async function getBlogList() : Promise<blogInfoType[]> {
