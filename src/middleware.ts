@@ -4,12 +4,22 @@ import {NextRequest, NextResponse} from "next/server";
 import {redirect} from "next/navigation";
 
 export default function middleware(request : NextRequest) {
+    const pathname = request.nextUrl.pathname;
     const requestHeaders = new Headers(request.headers);
-    requestHeaders.set('x-url', request.url);
+    requestHeaders.set('x-pathname', pathname);
+
+    if (pathname == '/') {
+        const url = request.nextUrl.clone()
+        url.pathname = "/home";
+
+        return NextResponse.redirect(url, {
+            headers: requestHeaders,
+        });
+    }
+
 
     return NextResponse.next({
         request: {
-            // Apply new request headers
             headers: requestHeaders,
         }
     });

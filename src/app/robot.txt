@@ -1,5 +1,5 @@
 User-Agent: *
 Allow: /
-Disallow: /private/
+Disallow: /auth/admin/
 
-Sitemap: XXX
+Sitemap: https://blueprintfactory.blog/sitemap.xml
