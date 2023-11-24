@@ -6,10 +6,12 @@ import Footer from "@/components/footer/footer";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import {getServerSession} from "next-auth";
-import {authOptions} from "@/utils/authOptions";
+import {authOptions} from "@/app/api/auth/[...nextauth]/authOptions";
 import {redirect} from "next/navigation";
 import {headers} from "next/headers";
 import React from "react";
+import GoogleAnalytics from "@/utils/googleAnalytics";
+import CookieBanner from "@/components/cookieBanner/cookieBanner";
 // import GoogleAnalytics from "@/app/GoogleAnalytics";
 config.autoAddCss = false;
 
@@ -25,30 +27,17 @@ export const metadata: Metadata = {
 }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-    const headersList = headers();
-    const pathname = headersList.get('x-pathname') || "";
-    let data = null
-    try {
-        data = await getServerSession(authOptions);
-    } catch (e) {
-    }
-
-    if (pathname.startsWith("/auth/admin") && (data == null || data.user.role !== "ADMIN")) {
-        redirect("/home")
-    }
-
-    if (pathname.startsWith("/auth/user") && (data == null)) {
-        redirect("/home")
-    }
+    const gaMeasurementId = process.env.NEXT_PUBLIC_GOOGLE_ID || 'DEFAULT_MEASUREMENT_ID';
 
     return (
         <html lang="en">
-            {/*<GoogleAnalytics />*/}
+            <GoogleAnalytics GA_MEASUREMENT_ID={gaMeasurementId}/>
             <body>
                 <AuthProvider>
                     <Header/>
                         {children}
                     <Footer/>
+                    <CookieBanner />
                 </AuthProvider>
             </body>
         </html>

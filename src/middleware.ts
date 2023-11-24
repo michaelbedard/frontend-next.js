@@ -1,30 +1,34 @@
-
-
 import {NextRequest, NextResponse} from "next/server";
-import {redirect} from "next/navigation";
+import { withAuth, NextRequestWithAuth } from "next-auth/middleware";
 
-export default function middleware(request : NextRequest) {
-    const pathname = request.nextUrl.pathname;
-    const requestHeaders = new Headers(request.headers);
-    requestHeaders.set('x-pathname', pathname);
+export default withAuth(
+    function middleware(request : NextRequestWithAuth) {
+        console.log("MIDDLEWARE WITH AUTH")
 
-    if (pathname == '/') {
-        const url = request.nextUrl.clone()
-        url.pathname = "/home";
-
-        return NextResponse.redirect(url, {
-            headers: requestHeaders,
-        });
-    }
-
-
-    return NextResponse.next({
-        request: {
-            headers: requestHeaders,
+        if (request.nextUrl.pathname == '/') {
+            return NextResponse.rewrite(
+                new URL("/home", request.url)
+            )
         }
-    });
+        if (request.nextUrl.pathname.startsWith("/auth/admin")
+        && request.nextauth.token?.role !== "ADMIN") {
+            return NextResponse.rewrite(
+                new URL("/denied", request.url)
+            )
+        }
+        if (request.nextUrl.pathname.startsWith("/auth/user")
+        && request.nextauth.token?.role !== "ADMIN"
+            && request.nextauth.token?.role !== "MANAGER" ) {
+            new URL("/denied", request.url)
+        }
 
-}
+    },
+    {
+        callbacks : {
+            authorized: () => true
+        }
+    }
+)
 
 export const config = {
     matcher: [

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {getServerSession} from "next-auth";
-import {authOptions} from "@/utils/authOptions";
+import {authOptions} from "@/app/api/auth/[...nextauth]/authOptions";
 
 const axiosInterceptor = axios.create({
     baseURL: 'https://blueprintfactorybackend.online/api', // Replace with your API base URL

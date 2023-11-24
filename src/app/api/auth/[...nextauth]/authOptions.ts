@@ -2,8 +2,6 @@ import {User} from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import {login} from "@/service/UserService";
 
-type ExtendedUserType = User & { jwtToken?: string; role?: string };
-
 export const authOptions = {
     // Configure one or more authentication providers
     providers: [
@@ -19,7 +17,8 @@ export const authOptions = {
                 }
 
                 try {
-                    const userData : userType = await login(credentials.email, credentials.password)
+                    // login returns any for now...
+                    const userData = await login(credentials.email, credentials.password)
 
                     if (!userData || !userData.user) {
                         return null;
@@ -31,7 +30,7 @@ export const authOptions = {
                         name: userData.user.name,
                         email: userData.user.email,
                         role: userData.user.role,
-                    } as ExtendedUserType;
+                    };
 
                 } catch (e) {
                     return null;

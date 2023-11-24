@@ -4,7 +4,7 @@ import Link from "next/link";
 import {Suspense} from "react";
 import Library from "@/app/blog/library";
 import {getServerSession} from "next-auth";
-import {authOptions} from "@/utils/authOptions";
+import {authOptions} from "@/app/api/auth/[...nextauth]/authOptions";
 import {login} from "@/service/UserService";
 
 export const metadata : Metadata = {

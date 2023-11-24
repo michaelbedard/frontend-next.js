@@ -13,12 +13,14 @@
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "axios": "^1.6.2",
+    "client-only": "^0.0.1",
     "next": "14.0.3",
     "next-auth": "^4.24.5",
     "react": "^18",
     "react-dom": "^18"
   },
   "devDependencies": {
+    "@types/gtag.js": "^0.0.18",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
