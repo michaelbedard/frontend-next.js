@@ -18,8 +18,8 @@ export default function Footer() {
                     <a href={"/about-us"} >About Me</a>
                 </div>
                 <div className={Styles.linkList} style={{flexWrap: "wrap"}}>
-                    <a href={"/terms-and-conditions"} >Terms & Conditions</a>
-                    <a href={"/references"} >References</a>
+                    <a href={"/info/terms-and-conditions"} >Terms & Conditions</a>
+                    <a href={"/info/references"} >References</a>
                 </div>
             </div>
         </footer>

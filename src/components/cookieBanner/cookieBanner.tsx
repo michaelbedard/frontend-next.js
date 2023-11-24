@@ -9,7 +9,7 @@ export default function CookieBanner(){
     const [cookieConsent, setCookieConsent] = useState<true | false | null>(null);
 
     useEffect (() => {
-        const storedCookieConsent = getLocalStorage("cookie_consent", null)
+        const storedCookieConsent = getLocalStorage("cookie_consent_blueprintfactory", null)
 
         setCookieConsent(storedCookieConsent)
     }, [setCookieConsent])
@@ -21,7 +21,7 @@ export default function CookieBanner(){
             'analytics_storage': newValue
         });
 
-        setLocalStorage("cookie_consent", cookieConsent)
+        setLocalStorage("cookie_consent_blueprintfactory", cookieConsent)
 
         console.log("Cookie Consent: ", cookieConsent)
     }, [cookieConsent]);

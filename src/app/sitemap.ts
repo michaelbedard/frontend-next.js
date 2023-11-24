@@ -31,11 +31,15 @@ export default async function sitemap() {
             lastModified: new Date()
         },
         {
-            url: `${baseUrl}/references`,
+            url: `${baseUrl}/info/references`,
             lastModified: new Date()
         },
         {
-            url: `${baseUrl}/terms-ans-condition`,
+            url: `${baseUrl}/info/terms-ans-condition`,
+            lastModified: new Date()
+        },
+        {
+            url: `${baseUrl}/info/cookies`,
             lastModified: new Date()
         },
         ...blogUrls
