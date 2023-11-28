@@ -1,39 +1,48 @@
 'use client';
 
-import Link from 'next/link'
 import Styles from "./cookieBanner.module.css"
 import {useEffect, useState} from "react";
 import {getLocalStorage, setLocalStorage} from "@/utils/storageHelper";
+import {Button} from "@/components/button/button";
 
 export default function CookieBanner(){
-    const [cookieConsent, setCookieConsent] = useState<true | false | null>(null);
-
-    useEffect (() => {
-        const storedCookieConsent = getLocalStorage("cookie_consent_blueprintfactory", null)
-
-        setCookieConsent(storedCookieConsent)
-    }, [setCookieConsent])
+    const [cookieConsent, setCookieConsent] = useState<true | false | null>(false);
 
     useEffect(() => {
-        const newValue = cookieConsent ? 'granted' : 'denied'
+        // Check if running in the browser before performing any client-side logic
+        if (typeof window !== 'undefined') {
+            const storedCookieConsent = getLocalStorage("cookie_consent", null);
+            setCookieConsent(storedCookieConsent);
 
-        window.gtag("consent", 'update', {
-            'analytics_storage': newValue
-        });
+            console.log("COOKIE CLIENT")
+        } else {
+            console.log("COOKIE SERVER")
+        }
+    }, []);
 
-        setLocalStorage("cookie_consent_blueprintfactory", cookieConsent)
+    const handleCookieConsent = (consent: boolean) => {
+        console.log(`CONSENT : ${consent}`)
 
-        console.log("Cookie Consent: ", cookieConsent)
-    }, [cookieConsent]);
+        setCookieConsent(consent);
+        setLocalStorage("cookie_consent", consent);
+
+        if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+            const newValue = consent ? 'granted' : 'denied';
+            window.gtag("consent", 'update', {
+                'analytics_storage': newValue
+            });
+            console.log("Cookie Consent: ", consent);
+        }
+    };
 
     return (
-        <div className={cookieConsent != null ? Styles.hidden : Styles.container}>
-            <div>
-                <Link href="/info/cookies"><p>We use <span>cookies</span> on our site.</p></Link>
+        <section className={cookieConsent == null ? Styles.container : Styles.hidden}>
+            <div className={Styles.link}>
+                <p>We use <span>cookies</span> on our site to enhance your experience.</p>
             </div>
-            <div>
-                <button onClick={() => setCookieConsent(false)}>Decline</button>
-                <button onClick={() => setCookieConsent(true)}>Allow Cookies</button>
+            <div className={Styles.buttons}>
+                <Button label={"Decline"} onClick={() => handleCookieConsent(false)} />
+                <Button label={"Allow Cookies"} onClick={() => handleCookieConsent(true)}/>
             </div>
-        </div>
+        </section>
     )}

@@ -1,0 +1,39 @@
+
+
+.container {
+    position: relative;
+    width: min(600px, 80%)
+}
+
+.content {
+    background-color: white;
+    position: relative;
+    border: solid 2px black;
+    border-radius: 8px;
+    padding: 10px 20px;
+    z-index: 2;
+}
+
+.content ol {
+    display: flex;
+    flex-direction: column;
+}
+
+.content li {
+    list-style-type: none;
+    padding: 0;
+    text-decoration: none;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.shadow {
+    position: absolute;
+    background-color: #333333;
+    top: 2px; /* Adjusted top position */
+    width: 100%; /* Adjusted width */
+    height: 100%; /* Adjusted height */
+    border: solid 2px black;
+    border-radius: 8px;
+    z-index: 1;
+}

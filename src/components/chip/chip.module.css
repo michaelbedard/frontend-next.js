@@ -1,0 +1,10 @@
+
+.container {
+    font-size: 0.9rem;
+    background-color: white;
+    padding: 0.2rem 0.3rem;
+    border-radius: 5px;
+    width: fit-content;
+    text-transform: capitalize;
+    border: 2px solid black;
+}

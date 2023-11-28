@@ -11,6 +11,9 @@ declare module "next-auth" {
             id: string,
             jwtToken: string,
             role: string
+            name : string
+            email : string,
+            image : string
         } & DefaultSession
     }
 

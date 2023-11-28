@@ -10,6 +10,8 @@ export default withAuth(
         //         new URL("/home", request.url)
         //     )
         // }
+
+
         if (request.nextUrl.pathname.startsWith("/auth/admin")
         && request.nextauth.token?.role !== "ADMIN") {
             return NextResponse.rewrite(
@@ -32,7 +34,7 @@ export default withAuth(
 
 export const config = {
     matcher: [
-        // '/((?!api|_next/static|_next/image|favicon.ico).*)'
+        // '/((?!api|_next/static|_next/image|favicon.ico).*)',
         '/auth/admin/:path*',
     ]
 }

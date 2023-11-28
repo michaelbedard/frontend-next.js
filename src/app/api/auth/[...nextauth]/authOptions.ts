@@ -1,6 +1,7 @@
 import {User} from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import {login} from "@/service/UserService";
+import {setLocalStorage} from "@/utils/storageHelper";
 
 export const authOptions = {
     // Configure one or more authentication providers
@@ -31,6 +32,14 @@ export const authOptions = {
                         email: userData.user.email,
                         role: userData.user.role,
                     };
+                    //
+                    // return {
+                    //     id: "7",
+                    //     jwtToken: "kk",
+                    //     name: "ll",
+                    //     email: "emailsuewi",
+                    //     role: "fnjew",
+                    // };
 
                 } catch (e) {
                     return null;

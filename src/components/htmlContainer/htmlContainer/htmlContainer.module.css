@@ -1,0 +1,23 @@
+
+
+.container table {
+    border : 3px solid black;
+    border-radius : 8px;
+    border-collapse:  collapse;
+}
+
+.container td {
+    padding: 10px;
+}
+
+.container td strong {
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.container h3 {
+    font-size: 25px;
+    text-decoration: underline;
+    margin-bottom: 15px;
+}

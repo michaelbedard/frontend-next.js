@@ -2,10 +2,40 @@
 
 .container {
     position: fixed;
-    bottom: 20px;
-    left: 20vw;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--blue-200); /* Add your background color */
+    padding: 5px;
+    display: flex;
+    flex-direction: row; /* Arrange children in a row */
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 8px;
+    border: solid 2px black;
 }
 
 .hidden {
     display: none;
+}
+
+.link {
+    display: flex;
+    justify-content: center;
+}
+
+.link p {
+    text-align: center;
+    margin: 0;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+}
+
+@media screen and (max-width: 600px) {
+    .buttons {
+        flex-direction: column;
+    }
 }

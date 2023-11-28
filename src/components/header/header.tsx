@@ -1,9 +1,9 @@
 'use client';
 
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {signIn, signOut, useSession} from "next-auth/react";
 import {Button} from "@/components/button/button";
-import {useRouter} from "next/navigation";
+import {usePathname, useRouter} from "next/navigation";
 import Link from "next/link";
 import styles from "./header.module.css"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,15 +11,38 @@ import { faBars, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 export default function Header() {
     const [showMenu, setShowMenu] = useState<boolean>(false)
-
+    const pathname = usePathname()
     const router = useRouter();
     const { data : session} = useSession()
+
+    // Set showMenu to false on page scroll
+    useEffect(() => {
+        setShowMenu(false);
+    }, [pathname]);
+
+    // Set showMenu to false on scroll
+    useEffect(() => {
+        const handleScroll = () => {
+            setShowMenu(false);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
 
     return (
             <header className={styles.container}>
                 <div className={styles.background}/>
 
-                <img className={styles.logo} alt={"logo"} src={"../../assets/blog_banner.png"}/>
+                <img
+                    className={styles.logo}
+                    onClick={() => router.push("/home")}
+                    alt={"logo"}
+                    src={"../../assets/blog_banner.png"}
+                />
 
                 <nav>
                     <ul className={showMenu ? styles.active : ""}>

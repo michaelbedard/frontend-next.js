@@ -1,43 +1,40 @@
 import axios from 'axios';
 import {getServerSession} from "next-auth";
 import {authOptions} from "@/app/api/auth/[...nextauth]/authOptions";
+import {useSession} from "next-auth/react";
 
-const axiosInterceptor = axios.create({
-    baseURL: 'https://blueprintfactorybackend.online/api', // Replace with your API base URL
-});
+const getInstance = (token: string | undefined) => {
+    const axiosApiInstance = axios.create({
+        baseURL: 'https://blueprintfactorybackend.online/api',
+    });
 
-axiosInterceptor.interceptors.request.use(
+    axiosApiInstance.interceptors.request.use((config) => {
+            if (token) {
+                config.headers['Authorization'] = `Bearer ${token}`
+            }
+            if (config.method && ['post', 'put', 'delete'].includes(config.method.toLowerCase())) {
+                console.log("ITS NOT A GET REQUEST")
+                config.headers['Content-Type'] = 'application/json';
+            }
+            return config
+        },
+        (error) => {
+            Promise.reject(error)
+        }
+    )
 
-    async (config) => {
-        console.log("Intercepted!")
-        const data = await getServerSession(authOptions);
+    axiosApiInstance.interceptors.response.use(
+        (response) => {
+            return response;
+        },
+        (error) => {
+            return Promise.reject(error);
+        }
+    );
 
-        console.log(JSON.stringify(data))
+    return axiosApiInstance
+}
 
-        // if (accessToken) {
-        //     if (config.headers) config.headers.token = accessToken;
-        // }
-        return config;
-    },
-    (error) => {
-        // Handle request errors here
-
-        return Promise.reject(error);
-    }
-);
-
-// Response interceptor
-axiosInterceptor.interceptors.response.use(
-    (response) => {
-        // Modify the response data here
-
-        return response;
-    },
-    (error) => {
-        // Handle response errors here
-
-        return Promise.reject(error);
-    }
-);
-
-export default axiosInterceptor;
+export default async function useAxios(token?: string) {
+    return getInstance(token)
+}

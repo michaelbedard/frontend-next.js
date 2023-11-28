@@ -1,12 +1,13 @@
 'use client'
 
 import {signIn, useSession} from "next-auth/react";
+import BackgroundImage from "@/components/backgroundImage/backgroundImage";
+import PrimaryTitle from "@/components/primaryTitle/primaryTitle";
+import SocialLinksSection from "@/components/socialLinksSection/socialLinksSection";
+import LoginForm from "@/components/loginForm/loginForm";
 
 
 const Login = () => {
-
-    const { data : session } = useSession()
-
     async function onSubmit() {
 
         console.log(onSubmit)
@@ -23,8 +24,13 @@ const Login = () => {
 
     return (
         <main>
-            CUSTOM LOGIN PAGE
-            <button onClick={() => onSubmit()}>SIGN IN</button>
+            <BackgroundImage alt={"back image"} imageSource={"../../assets/pencil.png"} />
+            <PrimaryTitle title={"LOGIN PAGE"} />
+            <SocialLinksSection />
+
+            <section>
+                <LoginForm />
+            </section>
         </main>
     )
 }

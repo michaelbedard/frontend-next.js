@@ -12,6 +12,7 @@ import {headers} from "next/headers";
 import React from "react";
 import GoogleAnalytics from "@/utils/googleAnalytics";
 import CookieBanner from "@/components/cookieBanner/cookieBanner";
+import Head from "next/head";
 // import GoogleAnalytics from "@/app/GoogleAnalytics";
 config.autoAddCss = false;
 
@@ -34,9 +35,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
     return (
         <html lang="en">
-            <head>
-                <GoogleAnalytics GA_MEASUREMENT_ID={gaMeasurementId}/>
-            </head>
+            <GoogleAnalytics GA_MEASUREMENT_ID={gaMeasurementId}/>
             <body>
                 <AuthProvider>
                     <Header/>

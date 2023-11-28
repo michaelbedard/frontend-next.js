@@ -1,0 +1,18 @@
+
+
+.options {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.options .tags {
+    display: flex;
+    flex-direction: row;
+    margin-top: 15px;
+
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}

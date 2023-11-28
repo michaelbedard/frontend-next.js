@@ -3,14 +3,14 @@
 import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
-import styles from "./subTitle.module.css"
+import styles from "./secondaryTitle.module.css"
 
 
 type SubTitleProps = {
     text :string
 }
 
-const SubTitle = ({text}: SubTitleProps) => {
+const SecondaryTitle = ({text}: SubTitleProps) => {
 
     const handleClick = () => {
         const element = document.getElementById(`sub-title-${text}`);
@@ -41,4 +41,4 @@ const SubTitle = ({text}: SubTitleProps) => {
     )
 }
 
-export default SubTitle
+export default SecondaryTitle
