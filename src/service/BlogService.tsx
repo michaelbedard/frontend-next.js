@@ -1,75 +1,79 @@
 import useAxios from "@/utils/axiosInterceptor";
+import {blogType} from "blog-types";
 
 // PUBLIC
-export async function getBlogList() : Promise<blogInfoType[]> {
+export async function getBlogList(fields : string[]) : Promise<any[]> {
     const axiosInstance = await useAxios();
-    const response = await axiosInstance.get("https://blueprintfactorybackend.online/api/public/getBlogList/info")
+    const response = await axiosInstance.get("/public/getBlogList", {
+        params : {
+            FIELDS: fields.join(',')
+        }
+    })
     // await new Promise(resolve => setTimeout(resolve, 3000))
 
-    console.log("getBlogList::" + JSON.stringify(response.data))
-    return response.data === "" ? null : response.data
+    console.log("getBlogList::", response.data.object)
+    return response.data === "" ? null : response.data.object
 }
 
-export async function getBlog(path: string) : Promise<blogType> {
-    const axiosInstance = await useAxios();
-    const response = await axiosInstance.get("https://blueprintfactorybackend.online/api/public/getBlog", {
+export async function getBlog(path: string, fields : string[], token?: string) : Promise<any> {
+    const axiosInstance = token ? await useAxios(token) : await useAxios();
+    const response = await axiosInstance.get("/public/getBlog", {
         params : {
-            BLOG_PATH: path
+            PATH: path,
+            FIELDS : fields.join(',')
         }
     })
 
-    console.log("getBlog::" + JSON.stringify(response.data))
-    return response.data === "" ? null : response.data
-}
-
-export async function getBlogInfo(path: string) : Promise<blogInfoType> {
-    const axiosInstance = await useAxios();
-    const response = await axiosInstance.get("https://blueprintfactorybackend.online/api/public/getBlog/info", {
-        params : {
-            BLOG_PATH: path
-        }
-    })
-
-    console.log("getBlogInfo::" + JSON.stringify(response.data))
-    return response.data === "" ? null : response.data
-}
-
-export async function getBlogImageSource(path: string) : Promise<blogImageSourceType> {
-    const axiosInstance = await useAxios();
-    const response = await axiosInstance.get("https://blueprintfactorybackend.online/api/public/getBlog/imageSource", {
-        params : {
-            BLOG_PATH: path
-        }
-    })
-
-    console.log("getBlogImageSource::" + JSON.stringify(response.data))
-    return response.data === "" ? null : response.data
-}
-
-export async function getBlogContent(path: string) : Promise<blogContentType> {
-    const axiosInstance = await useAxios();
-    const response = await axiosInstance.get("https://blueprintfactorybackend.online/api/public/getBlog/content", {
-        params : {
-            BLOG_PATH: path
-        }
-    })
-
-    console.log("getBlogContent::" + JSON.stringify(response.data))
-    return response.data === "" ? null : response.data
-}
-
-export async function getBlogComments(path: string) : Promise<{id: string, comments: blogCommentType[]}> {
-    const axiosInstance = await useAxios();
-    const response = await axiosInstance.get("https://blueprintfactorybackend.online/api/public/getBlog/comment", {
-        params : {
-            BLOG_PATH: path
-        }
-    })
-
-    console.log("getBlogComments::" + JSON.stringify(response.data))
-    return response.data === "" ? null : response.data
+    console.log("getBlog::", response.data.object)
+    return response.data === "" ? null : response.data.object
 }
 
 // PRIVATE
 
 // ADMIN
+export async function getBlogListByStatus(token: string, status: string, fields : string[]) : Promise<any> {
+    const axiosInstance = await useAxios(token);
+    const response = await axiosInstance.get("/admin/getBlogListByStatus", {
+        params : {
+            STATUS: status,
+            FIELDS : fields.join(',')
+        }
+    })
+
+    console.log("getBlog::", response.data.object.object)
+    return response.data === "" ? null : response.data.object
+}
+
+export async function createBlog(token: string, path: string) : Promise<any> {
+    const axiosInstance = await useAxios(token);
+    const response = await axiosInstance.post("/admin/createBlog", {}, {
+        params : {
+            PATH: path,
+        }
+    })
+
+    console.log("createBlog::", response.data)
+    return response.data === "" ? null : response.data
+}
+
+export async function updateBlog(token: string, blog: any) : Promise<any> {
+    const axiosInstance = await useAxios(token);
+    const response = await axiosInstance.put("/admin/updateBlog",
+        blog
+    )
+
+    console.log("updateBlog::", response.data)
+    return response.data === "" ? null : response.data
+}
+
+export async function deleteBlog(token: string, blogId: number) : Promise<any> {
+    const axiosInstance = await useAxios(token);
+    const response = await axiosInstance.delete("/admin/deleteBlog", {
+        params : {
+            BLOG_ID : blogId
+        }
+    })
+
+    console.log("deleteBlog::", response.data)
+    return response.data === "" ? null : response.data
+}

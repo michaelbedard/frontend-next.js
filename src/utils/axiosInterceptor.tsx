@@ -5,7 +5,8 @@ import {useSession} from "next-auth/react";
 
 const getInstance = (token: string | undefined) => {
     const axiosApiInstance = axios.create({
-        baseURL: 'https://blueprintfactorybackend.online/api',
+        // baseURL: 'https://blueprintfactorybackend.online/api',
+        baseURL: 'http://localhost:8080/api',
     });
 
     axiosApiInstance.interceptors.request.use((config) => {

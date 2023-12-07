@@ -1,27 +1,40 @@
 'use client';
 
-import {getBlogImageSource} from "@/service/BlogService";
 import { useRouter } from "next/navigation";
 import {Suspense, useEffect, useState} from "react";
-import {BlogCardImage} from "@/components/blogCard/blogCardImage";
 import Chip from "@/components/chip/chip";
 import Styles from "./blogCard.module.css"
 import Loading from "@/app/loading";
 import Link from "next/link";
-import { format } from 'date-fns';
+import {format} from "util";
+import {blogInfoType} from "blog-types";
+import BlogCardImage from "@/components/blogCard/blogCardImage";
+import BlueprintCardImageDELETE from "@/components/blogCard/BlueprintCardImageDELETE";
 
 interface BlogCardProps {
-    data : blogInfoType
+    data: blogInfoType
+    href: string
+    isBlueprint ?: boolean
 }
 
-export default function BlogCard({data} : BlogCardProps) {
-    const formattedDate = format(new Date(data.createdAt), 'MM/dd/yyyy');
+const BlogCard = ({data, href, isBlueprint} : BlogCardProps) => {
+    const formattedDate = new Date(data.createdAt).toLocaleDateString('en-US', {
+        month: '2-digit',
+        day: '2-digit',
+        year: 'numeric',
+    });
 
     return (
-        <Link className={Styles.container} href={{pathname : `/blog/${data.path}`, query: { data: JSON.stringify(data) } }}>
+        <Link className={Styles.container} href={{pathname : href, query: {
+            data: JSON.stringify(data)
+        }}}>
             <div className={Styles.cover}>
                 <Suspense fallback={<Loading size={"AUTO"} />}>
-                    <BlogCardImage path={data.path}/>
+                    {isBlueprint ? (
+                        <BlueprintCardImageDELETE id={data.id}/>
+                    ):(
+                        <BlogCardImage path={data.path}/>
+                    )}
                 </Suspense>
                 <ul>
                     {data.tags.map((tag, index) => (
@@ -49,3 +62,5 @@ export default function BlogCard({data} : BlogCardProps) {
         </Link>
     )
 }
+
+export default BlogCard

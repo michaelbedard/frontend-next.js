@@ -8,6 +8,7 @@ import {Suspense, useEffect, useState} from "react";
 import BlogCard from "@/components/blogCard/blogCard";
 import Styles from "./searchLibraryCSR.module.css"
 import {Button} from "@/components/button/button";
+import {blogInfoType} from "blog-types";
 
 interface SearchLibraryCSRProps {
     blogInfoData : blogInfoType[]
@@ -76,7 +77,7 @@ export default function SearchLibraryCSR({ blogInfoData, tagData } : SearchLibra
                 <Library
                     data={records}
                     renderCard={(data) => (
-                        <BlogCard data={data}/>
+                        <BlogCard data={data} href={`blog/${data.path}`}/>
                     )}
                     recordsPerPage={6}
                     showNav={true}

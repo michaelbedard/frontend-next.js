@@ -1,19 +1,22 @@
 import PrimaryTitle from "@/components/primaryTitle/primaryTitle";
 import React, {Suspense} from "react";
-import {getBlogImageSource, getBlogInfo} from "@/service/BlogService";
 import Styles from "./heaserSSR.module.css"
 import Loading from "@/app/loading";
 import Chip from "@/components/chip/chip";
+import {blogInfoType} from "blog-types";
+import {getBlog} from "@/service/BlogService";
 
 interface HeaderSSRProps {
-    path : string
-    data : blogInfoType | null
+    path: string
+    data : blogInfoType
 }
 
-export default async function HeaderSSR({path, data} : HeaderSSRProps) {
-    if (data == null) {
-        data = await getBlogInfo(path)
-    }
+export default async function HeaderCSR({path, data} : HeaderSSRProps) {
+    const formattedDate = new Date(data.createdAt).toLocaleDateString('en-US', {
+        month: '2-digit',
+        day: '2-digit',
+        year: 'numeric',
+    });
 
     return (
         <>
@@ -28,7 +31,7 @@ export default async function HeaderSSR({path, data} : HeaderSSRProps) {
                         ))}
                     </ul>
                     <Suspense fallback={<Loading size={"AUTO"}/>}>
-                        <ImageSSR path={path} alt={data.title} />
+                        <Image path={path} alt={data.title} />
                     </Suspense>
                 </div>
                 <div className={Styles.info} >
@@ -36,7 +39,7 @@ export default async function HeaderSSR({path, data} : HeaderSSRProps) {
                         Written By : <span>{data.author.name}</span>
                     </div>
                     <div>
-                        <span> {new Date(data.createdAt).toLocaleDateString()} </span>
+                        <span> {formattedDate} </span>
                     </div>
                 </div>
             </div>
@@ -44,9 +47,9 @@ export default async function HeaderSSR({path, data} : HeaderSSRProps) {
     )
 }
 
-async function ImageSSR({path, alt} : {path: string, alt : string}) {
-    const imageSource = await getBlogImageSource(path);
+async function Image({path, alt} : {path: string, alt : string}) {
+    const data = await getBlog(path, ["imageSource"]);
     return (
-        <img alt={alt} src={imageSource.imageSource}/>
+        <img alt={alt} src={data.imageSource}/>
     )
 }

@@ -1,0 +1,16 @@
+
+.infosContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 10px;
+}
+
+.infoBox {
+    justify-content: start;
+}
+
+
+.infoBox span {
+    font-weight: bold;
+}

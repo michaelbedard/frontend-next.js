@@ -12,9 +12,9 @@
 import useAxios from "@/utils/axiosInterceptor";
 
 //PRIVATE
-export async function createComment(blogId : string, comment : blogCommentType, token: string) : Promise<blogCommentType> {
+export async function createComment(blogId : string, comment : commentType, token: string) : Promise<commentType> {
     const axiosInstance = await useAxios(token);
-    const response = await axiosInstance.post("https://blueprintfactorybackend.online/api/private/createComment",
+    const response = await axiosInstance.post("/private/createComment",
         comment,
     {
         params: {
@@ -26,9 +26,9 @@ export async function createComment(blogId : string, comment : blogCommentType, 
     return response.data === "" ? null : response.data
 }
 
-export async function updateComment(comment : blogCommentType, token: string) : Promise<blogCommentType> {
+export async function updateComment(comment : commentType, token: string) : Promise<commentType> {
     const axiosInstance = await useAxios(token);
-    const response = await axiosInstance.post("https://blueprintfactorybackend.online/api/private/updateComment", {
+    const response = await axiosInstance.post("/private/updateComment", {
         payload: comment
     })
 
@@ -36,9 +36,9 @@ export async function updateComment(comment : blogCommentType, token: string) : 
     return response.data === "" ? null : response.data
 }
 
-export async function deleteComment(commentId : string, token: string) : Promise<blogCommentType> {
+export async function deleteComment(commentId : string, token: string) : Promise<commentType> {
     const axiosInstance = await useAxios(token);
-    const response = await axiosInstance.post("https://blueprintfactorybackend.online/api/private/deleteComment", {
+    const response = await axiosInstance.post("/private/deleteComment", {
         params : {
             COMMENT_ID : commentId
         }

@@ -58,3 +58,15 @@
     background: #a7bfe8;
     border: solid 2px black;
 }
+
+.alternative {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.alternative svg,
+.alternative img {
+    padding: 20px;
+}

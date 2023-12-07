@@ -4,9 +4,11 @@ import Library from "@/components/library/library";
 import BlogCard from "@/components/blogCard/blogCard";
 import {Button} from "@/components/button/button";
 import { useRouter} from "next/navigation";
+import {getBlogList} from "@/service/BlogService";
+import {blogInfoType} from "blog-types";
 
 interface LibraryComponentProps {
-    data : any[]
+    data : blogInfoType[]
 }
 
 export default function BlogListCSR({data} : LibraryComponentProps) {
@@ -17,7 +19,7 @@ export default function BlogListCSR({data} : LibraryComponentProps) {
             <Library
                 data={data}
                 renderCard={(data) => (
-                    <BlogCard data={data}/>
+                    <BlogCard data={data} href={`blog/${data.path}`}/>
                 )}
                 recordsPerPage={3}
                 showNav={false}

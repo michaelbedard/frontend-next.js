@@ -4,6 +4,7 @@ import {Button} from "@/components/button/button";
 import {useState} from "react";
 import {signIn} from "next-auth/react";
 import Styles from "./loginForm.module.css"
+import {register} from "@/service/UserService";
 
 
 export default function LoginForm() {
@@ -13,28 +14,23 @@ export default function LoginForm() {
     const [password, setPassword] = useState("")
 
     async function handleCreateAccount() {
-
-        //create  the account, then signIn
-
-        const result = await signIn("credentials", {
-            email: email,
-            password: password,
-            redirect: false,
-            // callbackUrl: "/blog"
-        })
-
-        console.log(result)
+        if (name != "" && email != "" && password != "") {
+            await register(name, email, password)
+                .then((r) => {
+                    handleSignIn()
+                })
+                .catch((e) => {
+                    console.log(e)
+                })
+        }
     }
 
     async function handleSignIn() {
         const result = await signIn("credentials", {
             email: email,
             password: password,
-            redirect: false,
-            // callbackUrl: "/blog"
+            callbackUrl: "/"
         })
-
-        console.log(result)
     }
 
     function handleForgetPassword() {

@@ -1,6 +1,6 @@
 
 
 type authorType = {
-    id : number,
+    id : string,
     name : string
 }

@@ -33,7 +33,7 @@ export default async function UserPage() {
 }
 
 async function SearchLibrarySSR() {
-    const blogInfoData = await getBlogList()
+    const blogInfoData = await getBlogList(["path", "title", "subtitle", "createdAt", "tags", "author"])
     const tagData = await getTagList()
 
     return <SearchLibraryCSR blogInfoData={blogInfoData} tagData={tagData}/>

@@ -1,14 +1,17 @@
 import React, {Suspense} from "react";
-import ContentCSR from "@/app/blog/[path]/contentCSR";
-import CommentsSSR from "@/app/blog/[path]/commentsSSR";
-import {getBlogContent, getBlogInfo} from "@/service/BlogService";
+import ContentCSR from "@/app/blog/[path]/components/contentCSR";
 import {isBlogInfoType} from "@/utils/typeChecker";
 import PrimaryTitle from "@/components/primaryTitle/primaryTitle";
-import HeaderSSR from "@/app/blog/[path]/headerSSR/headerSSR";
-import {getServerSession} from "next-auth";
+import {getServerSession, Session} from "next-auth";
 import {Button} from "@/components/button/button";
 import Link from "next/link";
 import Loading from "@/app/loading";
+import {blogInfoType} from "blog-types";
+import {getBlog} from "@/service/BlogService";
+import SecondaryTitle from "@/components/secondaryTitle/secondaryTitle";
+import Comments from "@/components/comments/comments";
+import HeaderCSR from "@/app/blog/[path]/components/headerCSR";
+import ResourceCSR from "@/app/blog/[path]/components/ResourceCSR";
 
 interface BlogPageProps {
     params : {path : string}
@@ -17,10 +20,10 @@ interface BlogPageProps {
 
 export async function generateMetadata({ params }: BlogPageProps) {
     try {
-        const blogInfoData : blogInfoType = await getBlogInfo(params.path)
+        const data : {id: string, title: string, subtitle: string} = await getBlog(params.path, ["title", "subtitle"])
         return {
-            title: blogInfoData.title,
-            description: blogInfoData.subtitle, // ADD TAGS
+            title: data.title,
+            description: data.subtitle, // ADD TAGS
             alternates: {
                 canonical: `/blog/${params.path}`
             }
@@ -35,50 +38,62 @@ export async function generateMetadata({ params }: BlogPageProps) {
 }
 
 export default async function BlogPage({ params, searchParams }: BlogPageProps) {
-    let data : blogInfoType = searchParams?.data != undefined
-        ? (isBlogInfoType(JSON.parse(searchParams.data)) ? JSON.parse(searchParams.data) : null)
-        : null;
-
     return (
         <>
             <main>
-                <Suspense fallback={<Loading size={"MEDIUM"} /> }>
-                    <HeaderSSR path={params.path} data={data}/>
-                </Suspense>
+                <section>
+                    <Suspense fallback={<Loading size={"MEDIUM"} /> }>
+                        <HeaderSSR path={params.path} searchParams={searchParams}/>
+                    </Suspense>
+                </section>
 
-                <Suspense fallback={<div/>}>
-                    <EditLink path={params.path} />
-                </Suspense>
-
-                {/*creates some space between cover image and intro*/}
-                <div style={{height: "30px"}}/>
-
+                {/*elements inside ContentCSR are sections*/}
                 <Suspense fallback={<Loading size={"LARGE"} />}>
                     <ContentSSR path={params.path}/>
                 </Suspense>
 
-                <Suspense fallback={<Loading size={"MEDIUM"} />}>
-                    <CommentsSSR path={params.path}/>
-                </Suspense>
+                <section>
+                    <SecondaryTitle text={"Comments"} />
+                    <Suspense fallback={<Loading size={"MEDIUM"} />}>
+                        <CommentsSSR path={params.path}/>
+                    </Suspense>
+                </section>
+
+                <section>
+                    <SecondaryTitle text={"References"} />
+                    <Suspense fallback={<Loading size={"SMALL"}/>} >
+                        <ResourceSSR path={params.path} />
+                    </Suspense>
+                </section>
             </main>
         </>
     )
 }
 
-async function EditLink({path} : {path: string}) {
-    const data = await getServerSession()
+async function HeaderSSR({path, searchParams} : {path: string, searchParams: { data : string } | undefined}) {
+    const data : blogInfoType = searchParams?.data != undefined
+        ? (isBlogInfoType(JSON.parse(searchParams.data)) ? JSON.parse(searchParams.data)
+            : await getBlog(path, ["title", "subtitle", "createdAt", "tags", "author"]))
+        : await getBlog(path, ["title", "subtitle", "createdAt", "tags", "author"]);
 
-    if (data && data.user.role == "ADMIN") {
-        return (
-            <section>
-                <Link href={`/auth/admin/dashboard/blog-manager/${path}`}>Edit Blog</Link>
-            </section>
-        )
-    }
-    return <div/>
+    return <HeaderCSR path={path} data={data}/>
 }
 
 async function ContentSSR({path} : {path: string}) {
-    const data: blogContentType = await getBlogContent(path);
+    const data = await getBlog(path, ["introduction", "body", "conclusion", "faqs"]);
     return <ContentCSR data={data}/>
+}
+
+async function CommentsSSR({path} : {path: string}) {
+    const data = await getBlog(path, ["comments"]);
+    const session = await getServerSession()
+
+    return (
+        <Comments commentsList={data.comments} currUserId={session?.user.id} blogId={data.id} />
+    )
+}
+
+async function ResourceSSR({path} : {path: string}) {
+    const data = await getBlog(path, ["resources"]);
+    return <ResourceCSR data={data}/>
 }

@@ -45,7 +45,7 @@ const ContactForm = () => {
         return (
             <div className={Styles.container}>
                 {submitState == "finished" && (
-                    <div>
+                    <div className={Styles.alternative}>
                         <FontAwesomeIcon icon={faLaughBeam} size="2x" className="fa-xl" />
                         <p>An email has been sent.  Thanks for writing us!</p>
                     </div>

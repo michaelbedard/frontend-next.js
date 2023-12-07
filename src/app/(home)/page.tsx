@@ -3,7 +3,7 @@ import {useSession} from "next-auth/react";
 import InfoCard from "@/components/infoCard/infoCard";
 import Library from "@/components/library/library";
 import {Suspense} from "react";
-import BlogListCSR from "@/app/home/blogListCSR";
+import BlogListCSR from "@/app/(home)/blogListCSR";
 import Loading from "@/app/loading";
 import {getBlogList} from "@/service/BlogService";
 import CollapsibleMenu from "@/components/collapsibleMenu/collapsibleMenu";
@@ -71,6 +71,7 @@ export default function Home() {
 }
 
 async function BlogListSSR() {
-    const data = await getBlogList()
+    const data = await getBlogList(["path", "title", "subtitle", "createdAt", "tags", "author"])
     return <BlogListCSR data={data} />
+
 }

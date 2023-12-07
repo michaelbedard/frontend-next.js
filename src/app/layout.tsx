@@ -13,8 +13,14 @@ import React from "react";
 import GoogleAnalytics from "@/utils/googleAnalytics";
 import CookieBanner from "@/components/cookieBanner/cookieBanner";
 import Head from "next/head";
+import { Inter } from 'next/font/google'
 // import GoogleAnalytics from "@/app/GoogleAnalytics";
 config.autoAddCss = false;
+
+const inter = Inter({
+    subsets: ['latin'],
+    display: 'swap',
+})
 
 export const metadata: Metadata = {
     metadataBase: new URL("https://blueprintfactory.blog"),
@@ -34,7 +40,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     const gaMeasurementId = process.env.NEXT_PUBLIC_GOOGLE_ID || 'DEFAULT_MEASUREMENT_ID';
 
     return (
-        <html lang="en">
+        <html lang="en" className={inter.className}>
             <GoogleAnalytics GA_MEASUREMENT_ID={gaMeasurementId}/>
             <body>
                 <AuthProvider>

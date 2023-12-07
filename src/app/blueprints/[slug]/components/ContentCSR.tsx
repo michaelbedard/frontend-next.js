@@ -1,16 +1,16 @@
 'use client';
 
 import React, {useRef} from "react";
-import HtmlContainer from "@/components/htmlContainer/htmlContainer/htmlContainer";
+import HtmlContainer from "@/components/htmlContainer/htmlContainer";
 import Index from "@/components/index";
 import CollapsibleMenu from "@/components/collapsibleMenu/collapsibleMenu";
 import Comments from "@/components/comments/comments";
 
 interface ContentCSRProps {
-    data : blogContentType
+    data : {id: string, introduction: string, body: string, conclusion: string}
 }
 
-export default async function ContentCSR({ data } : ContentCSRProps) {
+export default function ContentCSR({ data } : ContentCSRProps) {
     const bodyRef = useRef(null)
 
     return (
@@ -26,10 +26,6 @@ export default async function ContentCSR({ data } : ContentCSRProps) {
 
             <section ref={bodyRef}>
                 <HtmlContainer html={data.body}/>
-            </section>
-
-            <section style={{marginBottom: "1.5rem"}}>
-                <CollapsibleMenu items={data.faqs} />
             </section>
 
             <section>

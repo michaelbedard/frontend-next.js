@@ -1,6 +1,7 @@
+import {blogInfoType} from "blog-types";
 
 
-export function isBlogInfoType(obj: any): obj is blogInfoType {
+export function isBlogInfoType(obj: any): boolean {
     return (
         typeof obj === 'object' &&
         'id' in obj &&

@@ -21,3 +21,9 @@
     text-decoration: underline;
     margin-bottom: 15px;
 }
+
+/*for some reason, ol and ul are not on the line, must move them*/
+.container ul,
+.container ol {
+    margin-left: 24px;
+}

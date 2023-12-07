@@ -1,18 +1,21 @@
-import {getBlogImageSource} from "@/service/BlogService";
+'use client'
+
 import {useEffect, useState} from "react";
 import Loading from "@/app/loading";
+import {imageSourceType} from "blog-types";
+import {getBlog} from "@/service/BlogService";
 
-
-export function BlogCardImage({ path }: { path: string }) {
-    const [imageSource, setImageSource] = useState<blogImageSourceType | null>(
+const BlogCardImage = ({ path}: { path: string }) => {
+    const [data, setData] = useState<any | null>(
         null
     );
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const result = await getBlogImageSource(path);
-                setImageSource(result);
+                const result = await getBlog(path, ["imageSource"]);
+                console.log(result)
+                setData(result);
             } catch (error) {
                 console.error("Error fetching image source:", error);
             }
@@ -21,11 +24,16 @@ export function BlogCardImage({ path }: { path: string }) {
         fetchData();
     }, [path]);
 
-    if (imageSource === null) {
+    if (data === null) {
         return <Loading size={"AUTO"} />
     }
 
     return (
-        <img className={`blog-card__img`} src={imageSource.imageSource} alt="cover" />
+        <img className={`blog-card__img`} src={data.imageSource} alt="cover" />
+        // <div>
+        //     {/*{JSON.stringify(data.id)}*/}
+        // </div>
     );
 }
+
+export default BlogCardImage

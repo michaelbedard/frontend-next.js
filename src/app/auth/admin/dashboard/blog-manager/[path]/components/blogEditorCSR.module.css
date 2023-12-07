@@ -1,0 +1,37 @@
+
+.inputContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.inputContainer input {
+    width: 100%;
+}
+
+.tagsContainer {
+    display: flex;
+    flex-direction: row;
+    margin-top: 15px;
+
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.imageContainer {
+    border-radius: 8px;
+    height: 40vh;
+    width: 100%;
+    object-fit: cover;
+    margin-top: 15px;
+}
+
+.btnContainer {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    gap: 20px;
+}

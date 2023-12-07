@@ -1,7 +1,7 @@
 'use client';
 
-import {Button} from "@/components/button/button";
 import Styles from "./socialLinksSection.module.css"
+import Link from "next/link";
 
 export default function SocialLinksSection() {
     const handleNavigate = () => {
@@ -11,12 +11,15 @@ export default function SocialLinksSection() {
     return (
         <>
             <section className={Styles.container}>
-                <Button
-                    label={"Follow me on Youtube!"}
-                    onClick={handleNavigate}
-                    image={<img alt={"follow us on youtube"} src={"../../../assets/facebook.png"}/>}
-                    style={{width: "min(500px, 100%)"}}
-                />
+                <Link href={"https://www.facebook.com/BlueprintFactoryBlog"} target="_blank" rel="noopener noreferrer">
+                    <img src={"../../../assets/facebook.png"} alt={"join facebook"} />
+                </Link>
+                <Link href={"https://www.instagram.com/blueprintfactoryblog/"} target="_blank" rel="noopener noreferrer">
+                    <img src={"../../../assets/instagram.png"} alt={"join instagram"} />
+                </Link>
+                <Link href={"https://twitter.com/BlueprintFact"} target="_blank" rel="noopener noreferrer">
+                    <img src={"../../../assets/twitter.png"} alt={"join twitter"} />
+                </Link>
             </section>
             <div style={{height: "20px"}} />
         </>
