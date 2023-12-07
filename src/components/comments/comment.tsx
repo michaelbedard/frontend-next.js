@@ -2,11 +2,11 @@ import CommentForm from "@/components/comments/commentForm";
 import Styles from "./comments.module.css"
 
 interface CommentProps {
-    comment: blogCommentType
-    replies: blogCommentType[]
+    comment: commentType
+    replies: commentType[]
     currUserId: string | undefined
     onDeleteComment: (commentId: string) => void
-    onUpdateComment: (comment: blogCommentType) => void
+    onUpdateComment: (comment: commentType) => void
     addComment: (body: string, parentId: string | null) => void
     activeComment: {id: string, type: 'replying' | 'editing'} | null
     setActiveComment: (activeComment: {id: string, type: 'replying' | 'editing'} | null) => void

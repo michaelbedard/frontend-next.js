@@ -8,13 +8,13 @@ import CommentForm from "@/components/comments/commentForm";
 import Styles from "./comments.module.css"
 
 interface CommentsProps {
-    commentsList: blogCommentType[]
+    commentsList: commentType[]
     currUserId: string | undefined
     blogId: string
 }
 
 const Comments = ({commentsList, currUserId, blogId}: CommentsProps) => {
-    const [comments, setComments] = useState<blogCommentType[]>(commentsList)
+    const [comments, setComments] = useState<commentType[]>(commentsList)
     const [activeComment, setActiveComment] = useState<{id: string, type: 'replying' | 'editing'} | null>(null)
     const { data : session} = useSession()
 
@@ -33,11 +33,11 @@ const Comments = ({commentsList, currUserId, blogId}: CommentsProps) => {
     function addComment(body: string, parentId: string | null) {
 
         if (session?.user != undefined) {
-            const comment : blogCommentType = {
-                id: 0,
+            const comment : commentType = {
+                id: "0",
                 parentId: parentId,
                 body: body,
-                author: {id: 0, name: ""},
+                author: {id: "0", name: ""},
                 createdAt: ""
             }
             createComment(blogId, comment, session.user.jwtToken)
@@ -66,7 +66,7 @@ const Comments = ({commentsList, currUserId, blogId}: CommentsProps) => {
         }
     }
 
-    function onUpdateComment(comment: blogCommentType) {
+    function onUpdateComment(comment: commentType) {
         const token = session?.user.jwtToken || "null";
 
         updateComment(comment, token)

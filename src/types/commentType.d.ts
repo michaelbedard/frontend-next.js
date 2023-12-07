@@ -2,7 +2,7 @@
 
 type commentType = {
     id: string,
-    parentId: string
+    parentId: string | null
     body: string,
     author: authorType
     createdAt: string

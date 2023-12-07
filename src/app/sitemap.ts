@@ -5,7 +5,7 @@ import {getBlogList} from "@/service/BlogService";
 export default async function sitemap() {
     const baseUrl = "https://blueprintfactory.blog"
 
-    const blogListData = await getBlogList();
+    const blogListData = await getBlogList(["path"]);
     const blogUrls = blogListData.map((blog) => {
         return {
             url: `${baseUrl}/blog/${blog.path}`,
@@ -15,7 +15,7 @@ export default async function sitemap() {
 
     return [
         {
-            url: `${baseUrl}/home`,
+            url: `${baseUrl}/`,
             lastModified: new Date()
         },
         {
