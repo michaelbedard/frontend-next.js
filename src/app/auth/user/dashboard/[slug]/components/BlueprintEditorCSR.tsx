@@ -99,11 +99,10 @@ export default function BlueprintEditorCSR({ data, tags } : BlueprintEditorProps
     }
 
     function handleDelete() {
-        const { data : session } = useSession();
         if (session?.user && window.confirm("Are you sure you want to remove blog?")) {
             deleteBlueprint(session.user.jwtToken, parseInt(blueprintData.id))
                 .then(() => {
-                    router.push("/")
+                    router.push("/auth/user/dashboard")
                 })
         }
     }

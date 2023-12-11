@@ -97,11 +97,10 @@ export default function BlogEditorCSR({ data, tags } : BlogEditorProps) {
     }
 
     function handleDelete() {
-        const { data : session } = useSession();
         if (session?.user && window.confirm("Are you sure you want to remove blog?")) {
             deleteBlog(session.user.jwtToken, parseInt(blogData.id))
                 .then(() => {
-                    router.push("/")
+                    router.push("/auth/admin/dashboard")
                 })
         }
     }

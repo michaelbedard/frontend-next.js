@@ -1,5 +1,6 @@
 import {now} from "next-auth/client/_utils";
 import {getBlogList} from "@/service/BlogService";
+import {getBlueprintList} from "@/service/BlueprintService";
 
 
 export default async function sitemap() {
@@ -13,6 +14,14 @@ export default async function sitemap() {
         }
     }) ?? [];
 
+    // const blueprintListData = await getBlueprintList(["createdAt"]);
+    // const blueprintUrls = blueprintListData.map((blueprint) => {
+    //     return {
+    //         url: `${baseUrl}/blueprint/${blueprint.id}`,
+    //         lastModified: new Date()
+    //     }
+    // }) ?? [];
+
     return [
         {
             url: `${baseUrl}/`,
@@ -20,6 +29,10 @@ export default async function sitemap() {
         },
         {
             url: `${baseUrl}/blog`,
+            lastModified: new Date()
+        },
+        {
+            url: `${baseUrl}/blueprint`,
             lastModified: new Date()
         },
         {
@@ -35,13 +48,14 @@ export default async function sitemap() {
             lastModified: new Date()
         },
         {
-            url: `${baseUrl}/info/terms-ans-condition`,
+            url: `${baseUrl}/info/terms-and-condition`,
             lastModified: new Date()
         },
         {
             url: `${baseUrl}/info/cookies`,
             lastModified: new Date()
         },
-        ...blogUrls
+        ...blogUrls,
+        // ...blueprintUrls
     ]
 }

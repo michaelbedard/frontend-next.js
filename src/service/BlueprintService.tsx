@@ -15,8 +15,8 @@ export async function getBlueprintList(fields : string[]) : Promise<any[]> {
     return response.data === "" ? null : response.data.object
 }
 
-export async function getBlueprint(id: number, fields : string[]) : Promise<any> {
-    const axiosInstance = await useAxios();
+export async function getBlueprint(id: number, fields : string[], token?: string) : Promise<any> {
+    const axiosInstance = token ? await useAxios(token) : await useAxios();
     const response = await axiosInstance.get("/public/getBlueprint", {
         params : {
             BLUEPRINT_ID: id,
@@ -46,8 +46,8 @@ export async function createBlueprint(token: string) : Promise<any> {
     const axiosInstance = await useAxios(token);
     const response = await axiosInstance.post("/private/createBlueprint")
 
-    console.log("createBlueprint::", response.data.object)
-    return response.data === "" ? null : response.data.object
+    console.log("createBlueprint::", response.data)
+    return response.data === "" ? null : response.data
 }
 
 export async function updateBlueprint(token: string, blueprint: blueprintType) : Promise<any> {

@@ -32,7 +32,6 @@ export async function generateMetadata({ params }: BlogPageProps) {
         return {
             title: "Not found",
             description: "The page you are looking for does not exist",
-
         }
     }
 }

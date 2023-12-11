@@ -11,10 +11,27 @@ import ContentCSR from "@/app/blueprints/[slug]/components/ContentCSR";
 import HeaderCSR from "@/app/blueprints/[slug]/components/headerCSR";
 import ResourceCSR from "@/app/blueprints/[slug]/components/ResourceCSR";
 
-
 interface BlueprintPageProps {
     params : {slug : string}
     searchParams?: { data : string }
+}
+
+export async function generateMetadata({ params }: BlueprintPageProps) {
+    try {
+        const data : {id: string, title: string, subtitle: string} = await getBlueprint(parseInt(params.slug), ["title", "subtitle"])
+        return {
+            title: data.title,
+            description: data.subtitle, // ADD TAGS
+            alternates: {
+                canonical: `/blog/${params.slug}`
+            }
+        }
+    } catch {
+        return {
+            title: "Not found",
+            description: "The page you are looking for does not exist",
+        }
+    }
 }
 
 export default function BlueprintPage({ params, searchParams } : BlueprintPageProps) {

@@ -15,6 +15,7 @@ import Loading from "@/app/loading";
 import {getBlogListByStatus} from "@/service/BlogService";
 import {getBlueprintListByStatusAndByUser} from "@/service/BlueprintService";
 import Link from "next/link";
+import CallToActionCSR from "@/app/blueprints/CallToActionCSR";
 
 
 export default function UserDashboard() {
@@ -29,7 +30,7 @@ export default function UserDashboard() {
     return (
         <main>
             <BackgroundImage alt={"back image"} imageSource={"../../assets/pencil.png"} />
-            <PrimaryTitle title={"LOGIN PAGE"} />
+            <PrimaryTitle title={"MY DASHBOARD"} />
             <SocialLinksSection />
 
             <section>
@@ -46,15 +47,13 @@ export default function UserDashboard() {
 
             <section>
                 <SecondaryTitle text={"Create a Blueprint"}/>
-                <Button
-                    style={{height: "100px"}}
-                    label={"Create a Blueprint Now"}
-                    onClick={() => router.push("/auth/user/dashboard/create-blueprint")}
-                    image={<img alt={"create"} src={"../../../assets/logo.png"}/>}
-                />
-                <p style={{textAlign: "center", marginTop: "20px", marginBottom: "0"}}>
-                    Blueprints allows you to promote your project through a blog post
-                </p>
+                {/*<Button*/}
+                {/*    style={{height: "100px"}}*/}
+                {/*    label={"Create a Blueprint Now"}*/}
+                {/*    onClick={() => router.push("/auth/user/dashboard/create-blueprint")}*/}
+                {/*    image={<img alt={"create"} src={"../../../assets/logo.png"}/>}*/}
+                {/*/>*/}
+                <CallToActionCSR />
             </section>
             <section>
                 <SecondaryTitle text={"My Blueprints - Public"} />

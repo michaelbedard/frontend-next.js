@@ -29,5 +29,6 @@ export default function BlogEditor({ params } : BlogEditorProps) {
 async function BlogEditorSSR({slug} : {slug : string}) {
     const blogData = await getBlueprint(parseInt(slug), ["title", "subtitle", "introduction", "status", "body", "conclusion", "imageSource", "resources", "tags"])
     const tagData = await getTagList();
+
     return <BlueprintEditorCSR data={blogData} tags={tagData}/>
 }

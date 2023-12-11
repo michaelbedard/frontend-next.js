@@ -5,6 +5,7 @@ import {useState} from "react";
 import {signIn} from "next-auth/react";
 import Styles from "./loginForm.module.css"
 import {register} from "@/service/UserService";
+import {useSearchParams} from "next/navigation";
 
 
 export default function LoginForm() {
@@ -12,6 +13,7 @@ export default function LoginForm() {
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const searchParams = useSearchParams()
 
     async function handleCreateAccount() {
         if (name != "" && email != "" && password != "") {
@@ -26,10 +28,12 @@ export default function LoginForm() {
     }
 
     async function handleSignIn() {
+        const callbackUrl = searchParams.get("CALLBACK_URL");
+
         const result = await signIn("credentials", {
             email: email,
             password: password,
-            callbackUrl: "/"
+            callbackUrl: callbackUrl ? callbackUrl : "/"
         })
     }
 
@@ -38,10 +42,11 @@ export default function LoginForm() {
     }
 
     return (
-        <div className={Styles.container}>
 
-            <div className={`${Styles.signUpContainer} ${isSignIn ? "" : Styles.active}`}>
-                <div className={Styles.form}>
+        <>
+            <div className={Styles.container}>
+                <div className={`${Styles.signUpContainer} ${isSignIn ? "" : Styles.active}`}>
+                    <div className={Styles.form}>
                         <h1>Create Account</h1>
                         <input type='text' placeholder='Name' onChange={(e) => setName(e.target.value)}/>
                         <input type='email' placeholder='Email' onChange={(e) => setEmail(e.target.value)}/>
@@ -53,10 +58,10 @@ export default function LoginForm() {
                                 <Button label={"Sign In"} onClick={() => {setIsSignIn(true)}} style={{color: "black"}}/>
                             </div>
                         </div>
+                    </div>
                 </div>
-            </div>
-            <div className={`${Styles.signInContainer} ${isSignIn ? "" : Styles.active}`}>
-                <div className={Styles.form}>
+                <div className={`${Styles.signInContainer} ${isSignIn ? "" : Styles.active}`}>
+                    <div className={Styles.form}>
                         <h1>Sign in</h1>
                         <input type='email' placeholder='Email' onChange={(e) => setEmail(e.target.value)}/>
                         <input type='password' placeholder='Password' onChange={(e) => setPassword(e.target.value)}/>
@@ -70,40 +75,41 @@ export default function LoginForm() {
                                 }} style={{color: "black"}} />
                             </div>
                         </div>
-                </div>
-            </div>
-
-            <div className={`${Styles.overlay} ${isSignIn ? "" : Styles.active}`}>
-                <div className={`${Styles.overlayContent} ${isSignIn ? "" : Styles.active}`}>
-                    <div className={`${Styles.overlayPanel} ${Styles.left} ${isSignIn ? "" : Styles.active}`}>
-                        <h1>Welcome Back!</h1>
-                        <p style={{padding: "20px"}}>
-                            To keep connected with us please login with your personal info
-                        </p>
-                        <Button
-                            label={"Sign In"}
-                            onClick={() => {
-                                setIsSignIn(true)
-                            }}
-                            style={{color: "black"}}
-                        />
-                    </div>
-
-                    <div className={`${Styles.overlayPanel} ${Styles.right} ${isSignIn ? "" : Styles.active}`}>
-                        <h1>Hello, Friend!</h1>
-                        <p style={{padding: "20px"}}>
-                            Enter Your personal details and start journey with us
-                        </p>
-                        <Button
-                            label={"Sign Up"}
-                            onClick={() => {
-                                setIsSignIn(false)
-                            }}
-                            style={{color: "black"}}
-                        />
                     </div>
                 </div>
+
+                <div className={`${Styles.overlay} ${isSignIn ? "" : Styles.active}`}>
+                    <div className={`${Styles.overlayContent} ${isSignIn ? "" : Styles.active}`}>
+                        <div className={`${Styles.overlayPanel} ${Styles.left} ${isSignIn ? "" : Styles.active}`}>
+                            <h1>Welcome Back!</h1>
+                            <p style={{padding: "20px"}}>
+                                To keep connected with us please login with your personal info
+                            </p>
+                            <Button
+                                label={"Sign In"}
+                                onClick={() => {
+                                    setIsSignIn(true)
+                                }}
+                                style={{color: "black"}}
+                            />
+                        </div>
+
+                        <div className={`${Styles.overlayPanel} ${Styles.right} ${isSignIn ? "" : Styles.active}`}>
+                            <h1>Hello, Friend!</h1>
+                            <p style={{padding: "20px"}}>
+                                Enter Your personal details and start journey with us
+                            </p>
+                            <Button
+                                label={"Sign Up"}
+                                onClick={() => {
+                                    setIsSignIn(false)
+                                }}
+                                style={{color: "black"}}
+                            />
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+        </>
     )
 }
