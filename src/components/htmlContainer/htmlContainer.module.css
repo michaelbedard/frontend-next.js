@@ -27,3 +27,21 @@
 .container ol {
     margin-left: 24px;
 }
+
+.container img {
+    display: block;
+    margin: 0 auto;
+    width: min(700px, 90vw);
+}
+
+.container blockquote {
+    border-left: 4px solid var(--blue-800); /* Left border color and width */
+    padding: 10px; /* Padding around the content inside the blockquote */
+    margin: 15px 0; /* Margin to provide space around the blockquote */
+    background-color: var(--blue-100); /* Background color */
+    font-style: italic; /* Italicize the text inside the blockquote */
+}
+
+.container blockquote p {
+    margin: 0; /* Remove default paragraph margin inside blockquote */
+}
