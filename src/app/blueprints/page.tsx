@@ -7,6 +7,7 @@ import {Suspense} from "react";
 import BlueprintListCSR from "@/app/blueprints/BlueprintListCSR";
 import {getBlueprintList} from "@/service/BlueprintService";
 import {blueprintInfoType} from "blueprint-types";
+import BlueprintListSSR from "@/app/blueprints/Temp";
 
 
 export default function AllBlueprints() {
@@ -42,9 +43,4 @@ export default function AllBlueprints() {
 
         </main>
     )
-}
-
-async function BlueprintListSSR() {
-    const data =  await getBlueprintList(["title", "subtitle", "createdAt", "tags", "author"])
-    return <BlueprintListCSR data={data}/>
 }

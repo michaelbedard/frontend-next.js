@@ -29,7 +29,7 @@ const TextEditor = ({initialContent, onChange, onSave} : TextEditorProps) => {
                 init={{
                     plugins : "advlist anchor lists autolink autoresize autosave charmap code bullist numlist codesample directionality emoticons fullscreen help image importcss insertdatetime link linkchecker lists media nonbreaking pagebreak preview quickbars save searchreplace table tinydrive visualblocks visualchars wordcount",
                     toolbar: 'undo redo | formatselect | bold italic underline | bullist numlist lists alignleft aligncenter alignright alignjustify outdent indent',
-                    content_style: "body { font-family: Inter, cursive; font-size: 20px; line-height: 1.5 }",
+                    content_style: "body { font-family: Inter, latin; font-size: 20px; line-height: 1.5 }",
                     toolbar_sticky: true,
                     save_onsavecallback: () => {
                         onSave()

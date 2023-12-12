@@ -10,6 +10,7 @@ import BackgroundImage from "@/components/backgroundImage/backgroundImage";
 import SocialLinksSection from "@/components/socialLinksSection/socialLinksSection";
 import {getTagList} from "@/service/UtilsService";
 import SecondaryTitle from "@/components/secondaryTitle/secondaryTitle";
+import SearchLibrarySSR from "@/app/blog/SSR";
 
 export const metadata : Metadata = {
     title: "blog page",
@@ -30,12 +31,4 @@ export default async function UserPage() {
             </Suspense>
         </main>
     )
-}
-
-async function SearchLibrarySSR() {
-    const blogInfoData = await getBlogList(["path", "title", "subtitle", "createdAt", "tags", "author"])
-    const tagData = await getTagList()
-
-    return <SearchLibraryCSR blogInfoData={blogInfoData} tagData={tagData}/>
-
 }

@@ -12,6 +12,7 @@ import SocialLinksSection from "@/components/socialLinksSection/socialLinksSecti
 import BackgroundImage from "@/components/backgroundImage/backgroundImage";
 import JoinNewsletter from "@/components/joinNewsletter/joinNewsletter";
 import PresentationCard from "@/components/presentationCard/presentationCard";
+import BlogListSSR from "@/app/(home)/Temp";
 
 export const metadata = {
     title: "Home Page",
@@ -68,10 +69,4 @@ export default function Home() {
 
         </main>
     )
-}
-
-async function BlogListSSR() {
-    const data = await getBlogList(["path", "title", "subtitle", "createdAt", "tags", "author"])
-    return <BlogListCSR data={data} />
-
 }
